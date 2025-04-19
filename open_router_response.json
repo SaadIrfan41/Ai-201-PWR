@@ -1,0 +1,27 @@
+{
+    "id": "gen-1744983068-YGZebwoPPKUGBYAVIlFz",
+    "provider": "Google AI Studio",
+    "model": "google/gemini-2.0-flash-exp",
+    "object": "chat.completion",
+    "created": 1744983068,
+    "choices": [
+      {
+        "logprobs": null,
+        "finish_reason": "stop",
+        "native_finish_reason": "STOP",
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "Why don't scientists trust atoms?\n\nBecause they make up everything!\n",
+          "refusal": null,
+          "reasoning": null
+        }
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 5,
+      "completion_tokens": 16,
+      "total_tokens": 21
+    }
+  }
+  
