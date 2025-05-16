@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from agents import Agent, Runner,set_tracing_disabled
+from agents import Agent, Runner, set_tracing_disabled
 from agents.extensions.models.litellm_model import LitellmModel
 
 
@@ -32,5 +32,4 @@ def main():
 
 
 if __name__ == "__main__":
-    
     main()

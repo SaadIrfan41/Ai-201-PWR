@@ -6,15 +6,21 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "openai-agents[litellm]>=0.0.13",
-    "litellm==1.67.1",
+ "litellm==1.67.1",
+ "chainlit>=2.5.5",
 ]
 [project.scripts]
 hello = "hello:main"
 step_01 = "src.step_01_open_router:main"
 step_02 = "src.step_02_simple_sync_agent_using_lite_llm:main"
 step_03 = "src.step_03_simple_async_agent_using_lite_llm:main_wrapper"
-step_04 = "src.step_04_agents_using_tools:main_wrapper"
+step_04 = "src.step_04_agent_using_tools:main_wrapper"
 step_05 = "src.step_05_agent_handoffs:main_wrapper"
+step_06 = "src.step_06_agent_with_structured_output:main_wrapper"
+step_07 = "src.step_07_agents_handoffs_example:main_wrapper"
+step_09 = "src.step_09_streaming_agent:main_wrapper"
+step_10 = "src.step_10_streaming_with_function_calling_agent:main_wrapper"
+step_12 = "src.step_12_agents_with_guardrails:main_wrapper"
 
 [build-system]
 requires = ["hatchling"]
