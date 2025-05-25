@@ -6,8 +6,8 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "openai-agents[litellm]>=0.0.13",
- "litellm==1.67.1",
- "chainlit>=2.5.5",
+    "litellm==1.67.1",
+    "chainlit>=2.5.5",
 ]
 [project.scripts]
 hello = "hello:main"
@@ -21,6 +21,7 @@ step_07 = "src.step_07_agents_handoffs_example:main_wrapper"
 step_09 = "src.step_09_streaming_agent:main_wrapper"
 step_10 = "src.step_10_streaming_with_function_calling_agent:main_wrapper"
 step_12 = "src.step_12_agents_with_guardrails:main_wrapper"
+step_13 = "src.step_13_agent_with_context:main_wrapper"
 
 [build-system]
 requires = ["hatchling"]
