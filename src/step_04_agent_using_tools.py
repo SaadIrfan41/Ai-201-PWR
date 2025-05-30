@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from agents import Agent, Runner, set_tracing_disabled
+from agents import Agent, Runner, set_tracing_disabled, RunContextWrapper
 from agents.extensions.models.litellm_model import LitellmModel
 from agents.tool import function_tool
 
@@ -17,6 +17,8 @@ if not gemini_api_key:
         "GEMINI_API_KEY is not set. Please ensure it is defined in your .env file."
     )
 
+def student_error_handler(ctx: RunContextWrapper[None], error: Exception) -> str:
+    return f"Error looking up student: {str(error)}"
 
 @function_tool
 def get_weather(location: str, unit: str = "C") -> str:
@@ -27,7 +29,7 @@ def get_weather(location: str, unit: str = "C") -> str:
     return f"The weather in {location} is 22 degrees {unit}."
 
 
-@function_tool
+@function_tool(failure_error_function=student_error_handler)
 def student_finder(student_roll: int) -> str:
     """
     find the PIAIC student based on the roll number
@@ -44,7 +46,8 @@ async def main():
         tools=[get_weather, student_finder],  # add tools here
         model=LitellmModel(model="gemini/gemini-2.0-flash", api_key=gemini_api_key),
     )
-    result = await Runner.run(agent, "Share PIAIC roll number 3 student details.")
+    # result = await Runner.run(agent, "Share PIAIC roll number 3 student details.")
+    result = await Runner.run(agent, "Share PIAIC roll number 52 student details.")
     print(result.last_agent.name)
     print(result.final_output)
 
