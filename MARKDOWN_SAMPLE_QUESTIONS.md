@@ -1,6 +1,3 @@
-Absolutely! Here's your **Markdown Basics Quiz** reformatted cleanly using proper Markdown syntax — great for display in Markdown-rendered environments like GitHub, Notion, or your website:
-
----
 
 # 📘 Markdown Basics Quiz
 

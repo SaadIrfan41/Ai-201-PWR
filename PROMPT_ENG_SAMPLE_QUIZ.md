@@ -1,6 +1,3 @@
-Here's the quiz with **clear newlines between questions and between each option**, for improved readability:
-
----
 
 ### 📘 **GPT-4.1 Prompting Techniques Quiz**
 

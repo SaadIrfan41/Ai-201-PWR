@@ -94,5 +94,3 @@ Hooks are powerful for:
 | **Use Cases**    | Debugging, logging, metrics, behavioral tuning                          |
 
 ---
-
-Would you like a full working code snippet with all lifecycle hooks for testing?

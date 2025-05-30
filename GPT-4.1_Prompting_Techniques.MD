@@ -1,7 +1,3 @@
-This is an excellent, well-structured summary of GPT-4.1 prompting techniques. Here's a slightly refined version that preserves your intent while improving flow and emphasis where needed — ideal for presentations, documentation, or onboarding materials:
-
----
-
 ## 🔧 GPT-4.1 Prompting Techniques: Step-by-Step Guide
 
 A concise guide to designing effective prompts using OpenAI’s GPT-4.1, with clear rationale behind each technique.
