@@ -1,10 +1,8 @@
----
+
 
 ### ✅ **QUIZ: Fundamentals of Agentic AI**
 
 **Total Questions: 48 | Duration: 120 Minutes | Format: MCQ**
-
----
 
 #### 🧠 **Section 1: Core Concepts of the OpenAI Agents SDK (12 questions)**
 
