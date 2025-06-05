@@ -2,10 +2,11 @@ import os
 import random
 from dotenv import load_dotenv
 from agents import Agent, Runner, TResponseInputItem
-from agents import set_tracing_disabled,function_tool
+from agents import set_tracing_disabled, function_tool
 from agents.run_context import RunContextWrapper
 from agents.extensions.models.litellm_model import LitellmModel
 from pydantic import BaseModel
+
 # Load the environment variables from the .env file
 load_dotenv()
 
@@ -23,14 +24,15 @@ if not groq_model:
         "GROQ_MODEL is not set. Please ensure it is defined in your .env file."
     )
 
+
 # Simulating a DB connection class
 class FakeDatabaseConnection:
     def __init__(self):
         self.data = {
             "user_balances": {"user_1": 150.0},
-            "store_items": {"apple": 2.5, "banana": 1.0, "milk": 3.0}
+            "store_items": {"apple": 2.5, "banana": 1.0, "milk": 3.0},
         }
-    
+
     def get_store_items(self) -> dict[str, float]:
         return self.data["store_items"]
 
@@ -39,22 +41,31 @@ class FakeDatabaseConnection:
 
     def search_item(self, name: str) -> float:
         return self.data["items"].get(name, random.uniform(1, 10))
-    
+
+
 # Custom Local Context including DB connection
 class AppLocalContext(BaseModel):
     user_id: str
     db: FakeDatabaseConnection
     cart: list[str]
+
     model_config = {
+        # When arbitrary_types_allowed = True, you're telling Pydantic:
+        # “It's okay, trust me — I know what I'm doing with this custom type.”
+        # This is useful when you're using custom types that Pydantic doesn't know how to validate or serialize.
         "arbitrary_types_allowed": True
     }
 
+
 @function_tool
-async def view_store_items(wrapper: RunContextWrapper[AppLocalContext]) -> dict[str, float]:
+async def view_store_items(
+    wrapper: RunContextWrapper[AppLocalContext],
+) -> dict[str, float]:
     """
     Return all available items in the store with their prices.
     """
     return wrapper.context.db.get_store_items()
+
 
 @function_tool
 async def get_user_balance(wrapper: RunContextWrapper[AppLocalContext]) -> float:
@@ -65,14 +76,18 @@ async def get_user_balance(wrapper: RunContextWrapper[AppLocalContext]) -> float
     user_id = wrapper.context.user_id
     return wrapper.context.db.get_balance(user_id)
 
+
 @function_tool
-async def search_item_price(wrapper: RunContextWrapper[AppLocalContext], item: str) -> str:
+async def search_item_price(
+    wrapper: RunContextWrapper[AppLocalContext], item: str
+) -> str:
     """
     Search for an item in the database and return its price.
     """
     print(f"Searching for {item} price")
     price = wrapper.context.db.search_item(item)
     return f"{item} costs ${price:.2f}"
+
 
 @function_tool
 async def add_to_cart(wrapper: RunContextWrapper[AppLocalContext], item: str):
@@ -81,6 +96,7 @@ async def add_to_cart(wrapper: RunContextWrapper[AppLocalContext], item: str):
     """
     print(f"Adding {item} to Cart")
     wrapper.context.cart.append(item)
+
 
 @function_tool
 async def view_cart(wrapper: RunContextWrapper[AppLocalContext]) -> list[str]:
@@ -100,16 +116,18 @@ async def main():
         You can add items to the users cart if the ask.
         You can get all the avaliable items in the store if the user ask.
         """,
-        tools=[get_user_balance, search_item_price, add_to_cart, view_cart,view_store_items],
+        tools=[
+            get_user_balance,
+            search_item_price,
+            add_to_cart,
+            view_cart,
+            view_store_items,
+        ],
         model=LitellmModel(model=str(groq_model), api_key=groq_api_key),
     )
 
     # Instantiate the context
-    context = AppLocalContext(
-        user_id="user_1",
-        db=FakeDatabaseConnection(),
-        cart=[]
-    )
+    context = AppLocalContext(user_id="user_1", db=FakeDatabaseConnection(), cart=[])
     # Simulate a conversation
     conversation: list[TResponseInputItem] = []
     print("You are now chatting with your grocery assistant. Type 'exit' to end.")
@@ -126,7 +144,6 @@ async def main():
         print("Assistant:", result.final_output)
 
         conversation = result.to_input_list()
-
 
 
 def main_wrapper():

@@ -22,6 +22,8 @@ step_09 = "src.step_09_streaming_agent:main_wrapper"
 step_10 = "src.step_10_streaming_with_function_calling_agent:main_wrapper"
 step_12 = "src.step_12_agents_with_guardrails:main_wrapper"
 step_13 = "src.step_13_agent_with_context:main_wrapper"
+step_14 = "src.step_14_agent_with_dynamic_instructions:main_wrapper"
+step_15 = "src.step_15_lifecycle_hooks:main_wrapper"
 
 [build-system]
 requires = ["hatchling"]
