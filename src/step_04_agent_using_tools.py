@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
 from agents import Agent, Runner, set_tracing_disabled, RunContextWrapper, ModelSettings
+
 from agents.extensions.models.litellm_model import LitellmModel
 from agents.tool import function_tool
 
@@ -49,7 +50,7 @@ def student_finder(student_roll: int) -> str:
     """
     find the PIAIC student based on the roll number
     """
-    data = {1: "Qasim", 2: "Sir Zia", 3: "Daniyal"}
+    data = {1: "Khubaib", 2: "Wania", 3: "Saad"}
 
     if student_roll is None or student_roll not in data:
         raise ValueError(f"Student with roll number {student_roll} not found.")
@@ -67,16 +68,23 @@ def student_finder(student_roll: int) -> str:
 async def main():
     agent = Agent(
         name="Assistant",
-        instructions="You are a helpfull assistant",
+        instructions="""
+        You are a helpful assistant.
+        You should try to answer questions using your own knowledge unless a tool is necessary.
+        """,
         tools=[get_weather, student_finder, subtract],  # You can add more tools here
-        # The output of the first tool call is used as the final output. This
-        # means that the LLM does not process the result of the tool call.
-        tool_use_behavior="stop_on_first_tool",
         # The default behavior. Tools are run, and then the LLM receives the results
         # and gets to respond.
-        # tool_use_behavior='run_llm_again',
+        tool_use_behavior="run_llm_again",
+        # The output of the first tool call is used as the final output. This
+        # means that the LLM does not process the result of the tool call.
+        # tool_use_behavior="stop_on_first_tool",
+        # ✅ Stop at specified tools
+        # This means that when the agent calls any of the specified tools,
+        # it won't process the tool's output further with the language model (LLM);
+        # instead, the tool's output is returned directly as the final result.
+        # tool_use_behavior=StopAtTools(stop_at_tool_names=["subtract"]),
         model=LitellmModel(model="gemini/gemini-2.0-flash", api_key=gemini_api_key),
-        model_settings=ModelSettings(tool_choice="subtract"),
     )
     # result = await Runner.run(agent, "Share PIAIC roll number 3 student details.")
     # result = await Runner.run(agent, "Share PIAIC roll number 52 student details.")
