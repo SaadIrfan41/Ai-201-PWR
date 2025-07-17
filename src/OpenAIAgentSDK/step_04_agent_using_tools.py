@@ -76,7 +76,7 @@ async def main():
         # The default behavior. Tools are run, and then the LLM receives the results
         # and gets to respond.
         tool_use_behavior="run_llm_again",
-        model_settings=ModelSettings(tool_choice="required"),
+        model_settings=ModelSettings(tool_choice="name_of_tool"),
         # The output of the first tool call is used as the final output. This
         # means that the LLM does not process the result of the tool call.
         # tool_use_behavior="stop_on_first_tool",
