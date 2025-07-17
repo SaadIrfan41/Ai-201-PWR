@@ -165,6 +165,6 @@
 - ✅ JSON-RPC uses JSON to call functions remotely
 - ✅ MCP is an advanced protocol built on JSON-RPC for LLMs to use tools
 
-### Now ask yourself :
+### Now ask yourself:
 
 What are we sending? How are we sending it? Why this format? That leads to understanding the layers: Transport → Protocol → Payload.
